@@ -13,6 +13,5 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         controller_.execute(command);
-
     }
 }

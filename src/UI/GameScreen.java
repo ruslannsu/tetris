@@ -5,6 +5,8 @@ import UI.game_src.Environment;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameScreen extends JFrame {
     int width_;
@@ -20,7 +22,6 @@ public class GameScreen extends JFrame {
         setSize(width_, height_);
         environment_ = new Environment(0, 0, 0, 0, 10, 20);
         getContentPane().add(BorderLayout.CENTER, environment_);
-
 
     }
     public void initKeyListener(KeyListener key_listener) {

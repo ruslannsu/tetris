@@ -18,8 +18,8 @@ public class FigureCreator {
     public void drawJFigure(Graphics g, int x, int y) {
         Graphics2D fig = (Graphics2D)g;
         fig.setColor(Color.RED);
-        fig.fillRect(x, y, block_width_, block_height_ * 3);
-        fig.fillRect(x - 2*block_width_, y + 3*block_height_, block_width_ * 3, block_height_);
+        fig.fillRect(x, y, block_width_, block_height_ * 2);
+        fig.fillRect(x - block_width_, y + 2*block_height_, block_width_ * 2, block_height_);
     }
     public void drawOFigure(Graphics g, int x, int y) {
         Graphics2D fig = (Graphics2D)g;

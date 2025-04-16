@@ -18,7 +18,6 @@ public class Figures {
         ArrayList<Coordinates> blocks = new ArrayList<>();
         for (int y = 0; y != 4 * block_height_ ; y+=block_height_) {
             Coordinates coordinates = new Coordinates(x, y);
-            System.out.println(y);
             blocks.add(coordinates);
         }
         return blocks;

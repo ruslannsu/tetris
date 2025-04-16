@@ -10,7 +10,6 @@ public class View extends JFrame {
     GameScreen game_screen_;
     Model model_;
     public View() {
-
         start_screen_ = new StartScreen("Tetris", " ", 500, 750);
         start_screen_.setVisible(true);
         start_screen_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

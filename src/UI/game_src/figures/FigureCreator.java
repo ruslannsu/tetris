@@ -13,4 +13,5 @@ public class FigureCreator {
     public Figure create(String index, int x, int y, int block_width, int block_height) throws Exception {
         return (Figure) Class.forName(properties_.getProperty(index)).getDeclaredConstructor(int.class, int.class, int.class, int.class).newInstance(x, y, block_width, block_height);
     }
+
 }

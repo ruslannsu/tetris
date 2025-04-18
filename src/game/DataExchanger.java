@@ -2,6 +2,7 @@ package game;
 
 import Model.Model;
 import UI.View;
+import UI.game_src.figures.Figure;
 
 import javax.xml.crypto.Data;
 
@@ -12,7 +13,8 @@ public class DataExchanger {
         model_ = model;
         view_ = view;
     }
-    void sendDataFromView() {
+    void sendDataFromView(Figure figure) {
+
     }
     void sendDataFromModel() {
     }

@@ -7,10 +7,8 @@ import javax.swing.*;
 
 
 public class Main {
-    public static void main(String[] args) {
-        Controller controller = new Controller(v);
+    public static void main(String[] args) throws Exception {
         Game game = new Game();
-
     }
 
 }

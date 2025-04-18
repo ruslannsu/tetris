@@ -1,34 +1,19 @@
 package UI.game_src.figures;
 
 import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
-public class IFigure {
-    public IFigure(ArrayList<Rectangle> blocks) {
-        blocks_ = blocks;
-    }
-    ArrayList<Rectangle> blocks_;
-    public void changeYCoordinate(int shift) {
-        for (int i = 0; i != blocks_.size(); ++i) {
-            blocks_.get(i).y += shift;
+public class IFigure extends Figure {
+    public IFigure(int x, int y, int block_width, int block_height) {
+        super(x, y, block_width, block_height);
+        color_ = Color.GREEN;
+        for (int i = 0; i != 4; ++i) {
+            Rectangle rect = new Rectangle(x_, y_ + i * block_height, block_width_, block_height_);
+            blocks_.add(rect);
         }
     }
-    public ArrayList<Rectangle> getBlocks() {
-        return blocks_;
+    @Override
+    public void rotate() {
+        return;
     }
-    public boolean checkMaxY(int bottom_y) {
-        int m = 0;
-        for (int i = 0; i != blocks_.size(); ++i) {
-            if (blocks_.get(i).y >= m) {
-                m = blocks_.get(i).y;
-            }
 
-        }
-        System.out.println(m);
-        if (m == bottom_y - getBlocks().get(0).getHeight()) {
-            return false;
-        }
-        return true;
-    }
 }

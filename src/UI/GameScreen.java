@@ -19,13 +19,12 @@ public class GameScreen extends JFrame {
     DataExchanger data_exchanger_;
     Environment environment_;
     Graphics2D fig;
-    public GameScreen(String winTitle, int w, int h, DataExchanger exchanger) throws Exception {
+    public GameScreen(String winTitle, int w, int h) throws Exception {
         super(winTitle);
         width_ = w;
         height_ = h;
-        data_exchanger_ = exchanger;
         setSize(width_, height_);
-        environment_ = new Environment(0, 0, 0, 0, 10, 20, exchanger);
+        environment_ = new Environment(0, 0, 0, 0, 10, 20);
         getContentPane().add(BorderLayout.CENTER, environment_);
         environment_.setSizes(w - 14, h - 37);
         environment_.figuresMotion(0);
@@ -41,5 +40,12 @@ public class GameScreen extends JFrame {
             angle+=45;
         }
         repaint();
+    }
+
+    public DataExchanger getDataExchanger() {
+        return data_exchanger_;
+    }
+    public void addExchanger(DataExchanger de) {
+        data_exchanger_ = de;
     }
 }

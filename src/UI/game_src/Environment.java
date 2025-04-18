@@ -32,14 +32,13 @@ public class Environment extends JPanel {
     Figure actual_figure_;
 
 
-    public Environment(int x, int y, int height_shift, int width_shift, int block_width_num, int block_height_num, DataExchanger exchanger) throws Exception {
+    public Environment(int x, int y, int height_shift, int width_shift, int block_width_num, int block_height_num) throws Exception {
         width_shift_ = width_shift;
         height_shift_ = height_shift;
         x_ = x;
         y_ = y;
         block_height_num_ = block_height_num;
         block_width_num_ = block_width_num;
-        exchanger_ = exchanger;
         figure_creator_ = new FigureCreator();
     }
     public void setSizes(int w, int h) throws Exception {
@@ -57,6 +56,7 @@ public class Environment extends JPanel {
         super.paintComponent(g);
         ((Graphics2D) g).setColor(Color.GRAY);
         g.fillRect(x_, y_, getWidth() - width_shift_, getHeight() - height_shift_);
+        figure_utils.drawField(exchanger_.getModelList());
         figure_utils.drawFigure(actual_figure_);
     }
     public void figuresMotion(int k) {
@@ -77,6 +77,7 @@ public class Environment extends JPanel {
                     int random_num = ThreadLocalRandom.current().nextInt(min, max + 1);
                     try {
                         actual_figure_ = figure_creator_.create(Integer.toString(random_num), x_, y_, block_size_w, block_size_h);
+                        exchanger_.sendDataFromView(actual_figure_);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -88,6 +89,9 @@ public class Environment extends JPanel {
             }
         };
         timer.schedule(motion, 500, 500);
+    }
+    public void addExchanger(DataExchanger de) {
+        exchanger_ = de;
     }
     int getFigNum() {
         return fig_number;

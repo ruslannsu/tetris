@@ -2,7 +2,6 @@ import Controller.Controller;
 import Model.Model;
 import UI.View;
 import game.Game;
-
 import javax.swing.*;
 
 
@@ -11,3 +10,4 @@ public class Main {
         Game game = new Game();
     }
 }
+//все работает как надо, лишь только координаты инвертированы

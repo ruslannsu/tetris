@@ -28,5 +28,16 @@ public class FigureUtils {
             g_.drawRect(blocks.get(i).x, blocks.get(i).y, blocks.get(i).width, blocks.get(i).height);
         }
     }
+    public void drawField(ArrayList<BlockData> blocks_data_list) {
+        for (int i = 0; i != blocks_data_list.size(); ++i) {
+            Rectangle rect = new Rectangle(blocks_data_list.get(i).x_, blocks_data_list.get(i).y_, block_width_, block_height_);
+            g_.setColor(blocks_data_list.get(i).color_);
+            g_.draw(rect);
+            g_.fill(rect);
+            g_.setColor(Color.BLACK);
+            g_.drawRect(blocks_data_list.get(i).x_, blocks_data_list.get(i).y_, block_width_, block_height_);
+        }
+
+    }
 
 }

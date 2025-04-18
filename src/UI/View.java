@@ -14,6 +14,9 @@ public class View extends JFrame {
     DataExchanger data_exchanger_;
     public void addExchanger(DataExchanger de) {
         data_exchanger_ = de;
+        game_screen_.addExchanger(de);
+        game_screen_.environment_.addExchanger(de);
+
     }
     public View() throws Exception {
         start_screen_ = new StartScreen("Tetris", " ", 500, 750);
@@ -22,7 +25,7 @@ public class View extends JFrame {
         start_screen_.setResizable(false);
         start_screen_.setLocationRelativeTo(null);
         start_screen_.setVisible(true);
-        game_screen_ = new GameScreen("Tetris", 300, 600, data_exchanger_);
+        game_screen_ = new GameScreen("Tetris", 300, 600);
         game_screen_.setResizable(false);
         System.out.println(game_screen_.getWidth());
         setVisible(false);

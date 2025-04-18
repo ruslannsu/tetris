@@ -67,5 +67,8 @@ public abstract class Figure {
     public Color getColor() {
         return color_;
     }
+    public int getBottomLimitY() {
+        return bottom_limit_y;
+    }
 
 }

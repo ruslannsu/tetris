@@ -10,9 +10,12 @@ import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.lang.Math.abs;
 
 
 public class Environment extends JPanel {
@@ -31,6 +34,8 @@ public class Environment extends JPanel {
     int w_;
     int h_;
     Figure actual_figure_;
+    ArrayList<Integer> acceptableX;
+    ArrayList<Integer> acceptableY;
 
 
     public Environment(int x, int y, int height_shift, int width_shift, int block_width_num, int block_height_num) throws Exception {
@@ -49,7 +54,22 @@ public class Environment extends JPanel {
         figure_utils = new FigureUtils(block_size_h, block_size_w);
         int w_ = w;
         int h_ = h;
-        actual_figure_ = figure_creator_.create("1", x_ / 2, y_, block_size_w, block_size_h);
+        actual_figure_ = figure_creator_.create("1", x_ + 5 * block_size_w, y_, block_size_w, block_size_h);
+        acceptableX = new ArrayList<>();
+        acceptableY = new ArrayList<>();
+
+        System.out.println(h_);
+        System.out.println(block_height_num_);
+        for (int i = 0; i <= block_width_num_; ++i) {
+            acceptableX.add(w_ - block_size_w * i - 6);
+        }
+        for (int i = 0; i <= block_height_num_; ++i) {
+            acceptableY.add(h_ - block_size_h * i - 3);
+        }
+        for (int i = 0; i != acceptableX.size(); ++i) {
+            System.out.println(acceptableX.get(i));
+        }
+
     }
 
     @Override
@@ -63,7 +83,6 @@ public class Environment extends JPanel {
     }
     public void figuresMotion(int k) {
         fig_number = 0;
-        System.out.println(getHeight());
         Timer timer = new Timer();
         TimerTask motion = new TimerTask() {
             @Override
@@ -71,21 +90,20 @@ public class Environment extends JPanel {
                 actual_figure_.updateLimitCoordinates();
                 Dimension dim = getSize();
                 int bottom = dim.height;
-                System.out.println(actual_figure_.getBottomLimitY());
-                System.out.println(bottom);
                 if ((bottom == actual_figure_.getBottomLimitY() + block_size_h + 3) || (exchanger_.checkBadCoordinates(actual_figure_))) {
                     exchanger_.sendDataFromView(actual_figure_);
                     int min = 1;
                     int max = 2;
                     int random_num = ThreadLocalRandom.current().nextInt(min, max + 1);
                     try {
-                        actual_figure_ = figure_creator_.create(Integer.toString(random_num), x_, y_, block_size_w, block_size_h);
+                        actual_figure_ = figure_creator_.create(Integer.toString(random_num), x_ + 5 * block_size_w, y_, block_size_w, block_size_h);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
                 else{
                     actual_figure_.changeY(block_size_h);
+                    System.out.println(actual_figure_.getBlocks().get(0).x);
                 }
                 repaint();
             }
@@ -123,5 +141,27 @@ public class Environment extends JPanel {
     }
     public void rotateActualFigure() {
         actual_figure_.rotate();
+        for (int i = 0; i != actual_figure_.getBlocks().size(); ++i) {
+            int x_dif_value = Math.abs(actual_figure_.getBlocks().get(i).x - acceptableX.getFirst());
+            int acceptable_x = acceptableX.getFirst();
+            for (int j = 0; j != acceptableX.size(); ++j) {
+                if ((Math.abs(actual_figure_.getBlocks().get(i).x - acceptableX.get(j))) < x_dif_value) {
+                    x_dif_value = (Math.abs(actual_figure_.getBlocks().get(i).x - acceptableX.get(j)));
+                    acceptable_x = acceptableX.get(j);
+                }
+            }
+            actual_figure_.getBlocks().get(i).x = acceptable_x;
+            int y_dif_value = Math.abs(actual_figure_.getBlocks().get(i).y - acceptableY.getFirst());
+            int acceptable_y = acceptableY.getFirst();
+            for (int j = 0; j != acceptableY.size(); ++j) {
+                if ((Math.abs(actual_figure_.getBlocks().get(i).y - acceptableY.get(j))) < y_dif_value) {
+                    y_dif_value = (Math.abs(actual_figure_.getBlocks().get(i).y - acceptableY.get(j)));
+                    acceptable_y = acceptableY.get(j);
+                }
+            }
+            actual_figure_.getBlocks().get(i).y = acceptable_y;
+            System.out.println(acceptable_y);
+        }
+
     }
 }

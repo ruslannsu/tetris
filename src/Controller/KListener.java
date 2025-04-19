@@ -16,6 +16,7 @@ public class KListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
         String command = "NULL";
         switch (e.getKeyCode()) {
             case (37):
@@ -24,6 +25,8 @@ public class KListener implements KeyListener {
             case (39):
                 command = "RIGHT-ROTATE";
                 break;
+            case (38):
+                command = "ROTATE";
         }
         controller_.execute(command);
     }

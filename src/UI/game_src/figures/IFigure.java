@@ -11,9 +11,6 @@ public class IFigure extends Figure {
             blocks_.add(rect);
         }
     }
-    @Override
-    public void rotate() {
-        return;
-    }
+
 
 }

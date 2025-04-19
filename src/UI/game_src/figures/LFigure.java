@@ -18,9 +18,4 @@ public class LFigure extends Figure {
         }
     }
 
-
-    @Override
-    public void rotate() {
-
-    }
 }

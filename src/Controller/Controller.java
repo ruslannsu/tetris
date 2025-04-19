@@ -11,7 +11,8 @@ public class Controller {
         button_listener = new ButtonListener(this);
         view_.getStartScreen().initButtonListener(button_listener);
         key_listener = new KListener(this);
-        view_.getGameScreen().initKeyListener(key_listener);
+        view_.getGameScreen().getEnvironment().initKeyListener(key_listener);
+
 
     }
 
@@ -24,10 +25,13 @@ public class Controller {
             view_.getStartScreen().setVisible(false);
         }
         if (command == "LEFT-ROTATE") {
-            view_.getGameScreen().rotateFigure("left");
+            view_.getGameScreen().getEnvironment().leftShiftFigure();
         }
         if (command == "RIGHT-ROTATE") {
-            view_.getGameScreen().rotateFigure("right");
+           view_.getGameScreen().getEnvironment().rightShiftFigure();
+        }
+        if (command == "ROTATE") {
+            view_.getGameScreen().getEnvironment().rotateActualFigure();
         }
 
 

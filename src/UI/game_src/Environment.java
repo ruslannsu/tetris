@@ -9,6 +9,7 @@ import game.DataExchanger;
 import javax.swing.*;
 import javax.xml.crypto.Data;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,6 +41,7 @@ public class Environment extends JPanel {
         block_height_num_ = block_height_num;
         block_width_num_ = block_width_num;
         figure_creator_ = new FigureCreator();
+        setDoubleBuffered(true);
     }
     public void setSizes(int w, int h) throws Exception {
         block_size_w = w / block_width_num_;
@@ -71,13 +73,13 @@ public class Environment extends JPanel {
                 int bottom = dim.height;
                 System.out.println(actual_figure_.getBottomLimitY());
                 System.out.println(bottom);
-                if (bottom == actual_figure_.getBottomLimitY() + block_size_h + 3) {
+                if ((bottom == actual_figure_.getBottomLimitY() + block_size_h + 3) || (exchanger_.checkBadCoordinates(actual_figure_))) {
+                    exchanger_.sendDataFromView(actual_figure_);
                     int min = 1;
                     int max = 2;
                     int random_num = ThreadLocalRandom.current().nextInt(min, max + 1);
                     try {
                         actual_figure_ = figure_creator_.create(Integer.toString(random_num), x_, y_, block_size_w, block_size_h);
-                        exchanger_.sendDataFromView(actual_figure_);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -95,5 +97,31 @@ public class Environment extends JPanel {
     }
     int getFigNum() {
         return fig_number;
+    }
+    public Figure getActualFigure() {
+        return actual_figure_;
+    }
+    public void initKeyListener(KeyListener key_listener) {
+        setFocusable(true);
+        System.out.println("wow");
+        this.addKeyListener(key_listener);
+    }
+    public int getBlockWidth() {
+        return block_size_w;
+    }
+    public void leftShiftFigure() {
+        if (exchanger_.isThereLeftNeighborsFigures(actual_figure_)) {
+            return;
+        }
+        actual_figure_.changeX(-block_size_w);
+    }
+    public void rightShiftFigure() {
+        if (exchanger_.isThereRightNeighborsFigures(actual_figure_)) {
+            return;
+        }
+        actual_figure_.changeX(block_size_w);
+    }
+    public void rotateActualFigure() {
+        actual_figure_.rotate();
     }
 }

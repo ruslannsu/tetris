@@ -60,7 +60,24 @@ public abstract class Figure {
         }
     }
 
-    abstract public void rotate();
+    public void rotate() {
+        int XCenter = 0;
+        int YCenter = 0;
+        for (Rectangle block : blocks_) {
+            XCenter += block.x;
+            YCenter += block.y;
+        }
+        XCenter /= 4;
+        YCenter /= 4;
+        for (Rectangle block : blocks_) {
+            double xOffset = block.x - XCenter;
+            double yOffset = block.y - YCenter;
+            double newX = -yOffset + XCenter;
+            double newY = xOffset + YCenter;
+            block.x = (int)Math.round(newX);
+            block.y = (int)Math.round(newY);
+        }
+    }
     public ArrayList<Rectangle> getBlocks() {
         return blocks_;
     }
@@ -69,6 +86,12 @@ public abstract class Figure {
     }
     public int getBottomLimitY() {
         return bottom_limit_y;
+    }
+    public int getBlockHeight() {
+        return block_height_;
+    }
+    public int getBlockWidth() {
+        return block_width_;
     }
 
 }

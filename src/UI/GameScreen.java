@@ -48,4 +48,7 @@ public class GameScreen extends JFrame {
     public void addExchanger(DataExchanger de) {
         data_exchanger_ = de;
     }
+    public Environment getEnvironment() {
+        return environment_;
+    }
 }

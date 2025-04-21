@@ -11,6 +11,4 @@ public class IFigure extends Figure {
             blocks_.add(rect);
         }
     }
-
-
 }

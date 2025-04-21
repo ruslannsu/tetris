@@ -78,6 +78,7 @@ public class Environment extends JPanel {
         super.paintComponent(g);
         ((Graphics2D) g).setColor(Color.GRAY);
         g.fillRect(x_, y_, getWidth() - width_shift_, getHeight() - height_shift_);
+        exchanger_.clearFullLines();
         figure_utils.drawField(exchanger_.getModelList());
         figure_utils.drawFigure(actual_figure_);
     }
@@ -93,7 +94,7 @@ public class Environment extends JPanel {
                 if ((bottom == actual_figure_.getBottomLimitY() + block_size_h + 3) || (exchanger_.checkBadCoordinates(actual_figure_))) {
                     exchanger_.sendDataFromView(actual_figure_);
                     int min = 1;
-                    int max = 2;
+                    int max = 3;
                     int random_num = ThreadLocalRandom.current().nextInt(min, max + 1);
                     try {
                         actual_figure_ = figure_creator_.create(Integer.toString(random_num), x_ + 5 * block_size_w, y_, block_size_w, block_size_h);
@@ -163,5 +164,8 @@ public class Environment extends JPanel {
             System.out.println(acceptable_y);
         }
 
+    }
+    public int getBlockHeight() {
+        return block_size_h;
     }
 }

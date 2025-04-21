@@ -4,14 +4,19 @@ import Model.Model;
 import UI.View;
 import UI.game_src.BlockData;
 import UI.game_src.figures.Figure;
-
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.*;
+
 public class DataExchanger {
     Model model_;
     View view_;
+    final int WIDTH = 10;
     public DataExchanger(Model model, View view) {
         model_ = model;
         view_ = view;
@@ -64,5 +69,37 @@ public class DataExchanger {
             }
         }
         return false;
+    }
+    public void clearFullLines() {
+        Map<Integer,Integer> countPerRow = new HashMap<>();
+        for (BlockData b : model_.getBlocksList()) {
+            int y = b.getY();
+            countPerRow.put(y, countPerRow.getOrDefault(y, 0) + 1);
+        }
+        List<Integer> fullRows = new ArrayList<>();
+        for (Map.Entry<Integer,Integer> e : countPerRow.entrySet()) {
+            if (e.getValue() == WIDTH) {
+                fullRows.add(e.getKey());
+            }
+        }
+        if (fullRows.isEmpty()) {
+            return;
+        }
+        fullRows.sort(Comparator.reverseOrder());
+
+        model_.getBlocksList().removeIf(b -> fullRows.contains(b.getY()));
+
+        for (BlockData b : model_.getBlocksList()) {
+            int yOld = b.y_;
+            int shift = 0;
+            for (int removedY : fullRows) {
+                if (yOld < removedY) {
+                    shift++;
+                }
+            }
+            if (shift > 0) {
+                b.y_ = (yOld + shift * view_.getGameScreen().getEnvironment().getBlockHeight());  // или yOld - shift, см. комментарий выше
+            }
+        }
     }
 }
